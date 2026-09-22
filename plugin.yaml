@@ -1,0 +1,29 @@
+name: clawproxy
+label: clawproxy
+kind: platform
+version: 0.1.0
+description: >
+  Receive webhooks from the public internet without exposing Hermes. Holds a clawproxy
+  (https://clawproxy.io) node connection inside the gateway and hands each event to your existing
+  Hermes webhook route of the same name, so prompts, delivery targets, skills and toolsets keep
+  working. Events arrive about a second after the provider sends them. Inbound only.
+author: ericdahl.dev
+requires_env:
+  - name: CLAWPROXY_NODE_TOKEN
+    description: "Node token from the clawproxy dashboard (Nodes → Add node). Starts with cpn_."
+    prompt: "clawproxy node token"
+    url: "https://clawproxy.io/dashboard/nodes"
+    password: true
+  - name: CLAWPROXY_HERMES_WEBHOOK_SECRET
+    description: "The HMAC secret of your Hermes webhook platform (platforms.webhook.extra.secret in config.yaml)"
+    prompt: "Hermes webhook secret"
+    password: true
+optional_env:
+  - name: CLAWPROXY_SERVER_URL
+    description: "clawproxy server (default https://clawproxy.io; change it for a self-hosted clawproxy)"
+    prompt: "clawproxy server URL"
+    password: false
+  - name: CLAWPROXY_HERMES_WEBHOOK_URL
+    description: "Where the Hermes webhook platform listens (default http://127.0.0.1:8644)"
+    prompt: "Hermes webhook URL"
+    password: false

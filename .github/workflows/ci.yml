@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Check out the pinned Hermes Agent
+        run: |
+          mkdir .hermes-src && cd .hermes-src
+          git init -q
+          git remote add origin https://github.com/NousResearch/hermes-agent.git
+          git fetch -q --depth 1 origin "$(cat ../HERMES_PIN)"
+          git checkout -q FETCH_HEAD
+      - name: Install
+        run: |
+          uv venv --python 3.11 .venv
+          uv pip install --python .venv/bin/python -e ./.hermes-src pytest pytest-asyncio "aiohttp==3.14.3" "websockets==15.0.1"
+      - name: Tests
+        run: .venv/bin/python -m pytest -q
+      - name: Hermes plugin compat check
+        run: HERMES_HOME=$(mktemp -d) .venv/bin/hermes plugins compat "$PWD"
