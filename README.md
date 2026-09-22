@@ -77,3 +77,5 @@ uv venv --python 3.11 .venv
 uv pip install --python .venv/bin/python -e ./.hermes-src pytest pytest-asyncio "aiohttp==3.14.3" "websockets==15.0.1"
 .venv/bin/python -m pytest -q
 ```
+
+MIT licensed.
