@@ -1,0 +1,4 @@
+# Words and paths the American-spelling check accepts (scripts/american_spelling.py in ericdahl-dev/.github).
+
+# asyncio.CancelledError: the Python standard library spells it this way.
+cancelled
